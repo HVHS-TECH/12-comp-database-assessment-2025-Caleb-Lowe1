@@ -44,10 +44,6 @@ import { fb_UpdateRec }
     from './fb_io.mjs';
 window.fb_UpdateRec = fb_UpdateRec;
 
-import { fb_wreakhavok }
-    from './fb_io.mjs';
-window.fb_wreakhavok = fb_wreakhavok;
-
 import { fb_sortedread }
     from './fb_io.mjs';
 window.fb_sortedread = fb_sortedread;
