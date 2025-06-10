@@ -90,8 +90,9 @@ function fb_initialise() {
   const app = initializeApp(firebaseConfig);
   const firebaseGameDB = getDatabase(app);
   console.info(firebaseGameDB);
-  document.getElementById("p_fbInitialise").innerHTML = "Button Clicked";
+  
 }
+
 var currentUser = null;
 var userId = null;
 function fb_authenticate() {
@@ -126,7 +127,7 @@ function fb_authenticate() {
       //❌ Code for an authentication error goes here
       console.log("authentication error")
     });
-  document.getElementById("p_fbAuthenticate").innerHTML = "Authentication success"
+ 
 };
 
 function fb_detectloginchange() {
@@ -151,7 +152,7 @@ function fb_detectloginchange() {
     console.log("onAuthStateChanged error")
   });
 
-  document.getElementById("p_fbdetectloginchange").innerHTML = "Login change detected"
+ 
 };
 
 function fb_logout() {
@@ -170,7 +171,7 @@ function fb_logout() {
       //❌ Code for a logout error goes here
       console.log("logout error")
     });
-  document.getElementById("p_fblogout").innerHTML = "logout"
+  
 };
 
 
@@ -181,7 +182,7 @@ function fb_WriteRec() {
   const DB = getDatabase()
   const dbReference = ref(DB, "Test/UID/" + userId);
 
-  set(dbReference, { score: Score }).then(() => {
+  set(dbReference, { score: 'hello' }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
