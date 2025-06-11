@@ -62,7 +62,6 @@ export {
   fb_logout,
   fb_WriteRec,
   fb_ReadRec,
-  fb_ReadAll,
   fb_UpdateRec,
   fb_sortedread
 };
@@ -120,6 +119,7 @@ function fb_authenticate() {
     console.log("successful authentication")
     currentUser = result.user;
     userId = currentUser.uid;
+    console.log(userId)
   })
 
     .catch((error) => {
@@ -140,6 +140,7 @@ function fb_detectloginchange() {
 
       //✅ Code for user logged in goes here
       console.log("user login successful")
+      
     } else {
 
       //✅ Code for user logged out goes here
@@ -181,8 +182,8 @@ function fb_WriteRec() {
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
   const dbReference = ref(DB, "Test/UID/" + userId);
-
-  set(dbReference, { score: 'hello' }).then(() => {
+  var name = document.getElementById("name").value;
+  set(dbReference, { Name: name }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -223,35 +224,6 @@ function fb_ReadRec() {
   document.getElementById("p_fbReadRec").innerHTML = "Record Read"
 }
 
-function fb_ReadAll() {
-  console.log('%c fb_ReadAll(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const DB = getDatabase()
-  const dbReference = ref(DB, "Test/UID/");
-
-
-  get(dbReference).then((snapshot) => {
-
-    var fb_data = snapshot.val();
-
-    if (fb_data != null) {
-
-      //✅ Code for a successful read all goes here
-      console.log("successfully read all")
-      console.log(fb_data)
-    } else {
-
-      //✅ Code for no record found goes here
-      console.log("no record found")
-    }
-
-  }).catch((error) => {
-
-    //❌ Code for a read all error goes here
-    console.log("error")
-  });
-  document.getElementById("p_fbReadAll").innerHTML = "Read all"
-}
 
 function fb_UpdateRec() {
   console.log('%c fb_UpdateRec(): ',

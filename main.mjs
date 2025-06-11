@@ -36,10 +36,6 @@ import { fb_ReadRec }
     from './fb_io.mjs';
 window.fb_ReadRec = fb_ReadRec;
 
-import { fb_ReadAll }
-    from './fb_io.mjs';
-window.fb_ReadAll = fb_ReadAll;
-
 import { fb_UpdateRec }
     from './fb_io.mjs';
 window.fb_UpdateRec = fb_UpdateRec;

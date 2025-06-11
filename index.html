@@ -19,18 +19,23 @@
 **************************************************************-->
 
 <body>
-    <header class="container">
-        <h1>12COMP Firebase Realtime Database Skills</h1>
+    <div class="container">
+        <h1>12COMP Firebase Database Project</h1>
     </header>
 
     <section>
        
 
-            <div class="column">
-                <button onclick="fb_initialise(), fb_authenticate()">Login</button>
-                <button onclick="fb_WriteRec()">write</button>
+                        <button onclick="fb_initialise(), fb_authenticate()">Login with Google</button>
+
                 <a href="Cave-Run/gameindex.html"><button>Cave Run</button></a>
                 <a href="gamethatworks/gamethatworkindex.html"><button>Coin collector</button></a>
+
+                <form id="username">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
+</form>
+<button onclick="fb_WriteRec()">Submit</button>
             </div>
 
          
