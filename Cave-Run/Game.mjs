@@ -10,8 +10,8 @@
 //Variables
 var Player;
 var score = 0;
-health = 3;
-canvasSize = {
+var health = 3;
+var canvasSize = {
 	x: 1200,
 	y: 600
 }
@@ -19,10 +19,7 @@ canvasSize = {
 
 let caveBg;
 
-function preload() {
-	// your other assets
-	// replace with your file name
-}
+
 var restartButton;
 var backButton;
 var finish;
@@ -45,12 +42,13 @@ function preload() {
 // setup()
 /*******************************************************/
 function setup() {
+	fb_WriteRec()
 	gameState = "play";
 	console.log("setup: ");
 	cnv = new Canvas(canvasSize.x, canvasSize.y, "pixelated x4")
 	world.gravity.y = 10;
 
-	finish = new Sprite(1000, 155);
+	finish = new Sprite(2002, 190);
 	finish.spriteSheet = finishImg;
 	finish.addAni({ w: 16, h: 16, row: 0, col: 0, });
 	finish.collider = "none";
@@ -107,24 +105,24 @@ function setup() {
 	unclimableblock.friction = 0;
 
 	new Tiles([
-		'rrrrrcrrrrrrrrrrrcrrrrrrrrrrcrrrrrrrrrrrrrrcccccrrrrrrrcrrrrrrcrrrrrrrrrrrrrrrrrcrrrrrrcrrrrrrrrrrrrrcrrrrrrrrrrcccrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w',
-		'w...............d...d...d...d...d...d...d...e...e...e...e',
-		'rrrrcrrhrrrrlrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-		'.',
-		'.',
-		'.',
-		'.',
-		'.'
+		'rrrrrcrrrrrrrrrrrcrrrrrrrrrrcrrrrrrrrrrrrrrcccccrrrrrrrcrrrrrrcrrrrrrrrrrrrrrrrrcrrrrrrcrrrrrrrrrrrrrcrrrrrrrrrrcccrrrrrrrrrrrrrw',
+		'w...............................................................................................................................w',
+		'w...................................c....................................................c......................................w',
+		'w...................................rr...................................................rr.....................................w',
+		'w..........................rrcrrrcccrcr.........................................rrcrrrcccrcr....................................w',
+		'w...................................rr.........e.........................................rr.....................................w',
+		'w...................................c....................................................c......................................w',
+		'w.......................e.......................................................................................................w',
+		'w......................hrc.......................e..............................................................................w',
+		'w........d........rr.........................r....................r............................................e................w',
+		'w............................................r....................r....................................r........................w',
+		'w...........cr...................d...........r....................c.............................................................w',
+		'rrrrrcrrr.......................................................rrr..................d...........r..............................w',
+		'rrrrrhrrrrr......d.....................................d........hcrr......d............................................d........w',
+		'rcrccccrrrrrrrrhrrrrrrhhhrrrrrcr..rrrrhrrrrrrrrrcccllcccrrrchrcrrrrcrrrrrrrcrrrcrrr....rrrhhrrrcrrrrcrrcrrrrrrrrrrrrrrrrrrrrrrrrr',
+		'rchhrrrrhrrrcrrrrcrrrrrrrrrrrrrw..wrrrhrrrrrrhrrrrrrrrrrrrrrrrrrrrrrhrr...........w....w',
+		'rrcrrrrrrrrrrrrrrrrrcrhrrrrrrrrhllhrrrrrrhrhhrrccrrrrrhrrcrrrrrrcrrrrrr...........wllllw',
+		'rrrrrrrrrcrrrrccrrrrrrrrcrrrrrrhhhhrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr...........wwwwww'
 	],
 		0, 0, //x,y
 		16, 16, //w,h 
@@ -154,7 +152,7 @@ function playercollectsemerald(e) {
 
 
 
-function win() { console.log("you win") }
+
 /*******************************************************/
 // draw()
 /*******************************************************/
@@ -193,43 +191,49 @@ function runGame() {
 
 
 	clear();
-
+	//different background layers
 	background(caveBg1);
 	background(caveBg2);
 	background(caveBg3);
 	background(caveBg4);
 	healthbar();
+	//makes the camera follow the player 
 	camera.x = Player.x;
 	camera.y = Player.y;
 	Movement();
 	displayScore();
+	//makes the sure the player won't rotate 
 	Player.rotationLock = true;
 
-	//makes the camera follow the player 
+
 
 
 
 
 	//checking if the player has won
-	if (Player.overlaps(finish)) { completedlevel(); }
-
-
-	//checking if the player has lost
-	if (Player.y >= 1300 || (health <= 0)) { lostgame(); }
-
-	if (Player.collides(lava) || Player.collides(hotrock)) {
-		Player.vel.y = -5; Player.vel.x = 1; health = (health - 1);
-		console.log(health)
+	if (Player.overlaps(finish)) {
+		completedlevel();
 	}
 
 
+	//checking if the player has lost
+	//Player.y >= 1300 is for just in case the player somehow managed to glitch through the map
+	if (Player.y >= 1300 || (health <= 0)) {
+		lostgame();
+	}
+	//if the player touches a hot material (hot rock or lava) then the player loses 1 health
+	if (Player.collides(lava) || Player.collides(hotrock)) {
+		Player.vel.y = -5; health = (health - 1);
+	}
+
+	//overlaps instead of collides because diamond has no collision so that the diamond can be collected without affecting the players movement
 	if (diamond.overlaps(Player, playercollectsdiamond)) {
 
 		playercollectsdiamond();
 
 	}
 
-
+//overlaps instead of collides because emerald has no collision so that the diamond can be collected without affecting the players movement
 	if (emerald.overlaps(Player, playercollectsemerald)) {
 
 		playercollectsemerald();
@@ -242,13 +246,13 @@ function runGame() {
 
 function lose() {
 	console.log("I LOST :(")
+	//makes it so that you can press the buttons
 	mouseInteractRestartButton();
 	mouseInteractBackButton();
-
+	
 };
 function lostgame() {
 	gameState = "lose";
-	finish.remove();
 	Player.remove();
 	unclimableblock.removeAll();
 	diamond.removeAll();
@@ -257,6 +261,7 @@ function lostgame() {
 	lava.removeAll();
 	emerald.removeAll();
 	hotrock.removeAll();
+	//resets camera position
 	camera.x = canvasSize.x / 2;
 	camera.y = canvasSize.y / 2;
 	background("red");
@@ -271,12 +276,11 @@ function lostgame() {
 
 	Back();
 
-
-
 };
 
 function win() {
 	console.log("WINNING")
+	//makes it so that you can press the buttons
 	mouseInteractRestartButton();
 	mouseInteractBackButton();
 };
@@ -287,7 +291,6 @@ function completedlevel() {
 	}
 	else if (health == 2) { score = score + 100; }
 	else if (health == 1) { score = score + 50; }
-	finish.remove();
 	Player.remove();
 	unclimableblock.removeAll();
 	diamond.removeAll();
@@ -296,6 +299,7 @@ function completedlevel() {
 	rock.removeAll();
 	lava.removeAll();
 	hotrock.removeAll();
+	//resets camera position
 	camera.x = canvasSize.x / 2;
 	camera.y = canvasSize.y / 2;
 	background("yellow");
@@ -326,7 +330,7 @@ function mouseInteractRestartButton() {
 		restartButton.addAni({ w: 16, h: 16, row: 0, col: 0, });
 	}
 	if (restartButton.mouse.pressing()) {
-		window.location.href = "Game1.html";
+		window.location.href = "Game.html";
 	}
 }
 
@@ -364,7 +368,7 @@ function mouseInteractBackButton() {
 		backButton.addAni({ w: 16, h: 16, row: 1, col: 0, });
 	}
 	if (backButton.mouse.pressing()) {
-		window.location.href = "index.html";
+		window.location.href = "gameindex.html";
 	}
 }
 

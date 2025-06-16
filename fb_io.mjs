@@ -120,6 +120,7 @@ function fb_authenticate() {
     currentUser = result.user;
     userId = currentUser.uid;
     console.log(userId)
+
   })
 
     .catch((error) => {
@@ -178,9 +179,14 @@ function fb_logout() {
 
 //function fb_WriteRec incomplete
 function fb_WriteRec() {
+  if (!currentUser) {alert("You must be logged in.")
+  location.href='index.html'
+  }
+  else {location.href='gameMenu.html'}
   console.log('%c fb_WriteRec(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
+  
   const dbReference = ref(DB, "Test/UID/" + userId);
   var name = document.getElementById("name").value;
   set(dbReference, { Name: name }).then(() => {
