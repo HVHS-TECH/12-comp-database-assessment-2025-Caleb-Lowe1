@@ -63,7 +63,8 @@ export {
   fb_WriteRec,
   fb_ReadRec,
   fb_UpdateRec,
-  fb_sortedread
+  fb_sortedread,
+  fb_WriteScore
 };
 /******************************************************/
 // fb_login()
@@ -175,6 +176,27 @@ function fb_logout() {
     });
   
 };
+
+
+function fb_WriteScore(userScore) {
+  console.log("Successfully Writing Score");
+  console.log(userScore);
+  const DB = getDatabase();
+
+
+    const dbReference= ref(DB, 'Test/UID/' + userId);
+    set(dbReference, {
+        Name: name,
+        userScore: userScore,
+    }).then(() => {
+        console.log("Write successful!")
+    }).catch((error) => {
+        console.log("fail Writing")
+    });
+    
+}
+
+
 
 
 //function fb_WriteRec incomplete

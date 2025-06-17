@@ -32,6 +32,10 @@ import { fb_WriteRec }
     from './fb_io.mjs';
 window.fb_WriteRec = fb_WriteRec;
 
+import { fb_WriteScore }
+    from './fb_io.mjs';
+window.fb_WriteScore = fb_WriteScore;
+
 import { fb_ReadRec }
     from './fb_io.mjs';
 window.fb_ReadRec = fb_ReadRec;

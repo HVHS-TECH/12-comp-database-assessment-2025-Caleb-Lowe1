@@ -7,6 +7,7 @@
 // Written by 22026cl
 
 /*******************************************************/
+
 //Variables
 var Player;
 var score = 0;
@@ -42,7 +43,7 @@ function preload() {
 // setup()
 /*******************************************************/
 function setup() {
-	fb_WriteRec()
+	fb_initialise();
 	gameState = "play";
 	console.log("setup: ");
 	cnv = new Canvas(canvasSize.x, canvasSize.y, "pixelated x4")
@@ -253,6 +254,7 @@ function lose() {
 };
 function lostgame() {
 	gameState = "lose";
+	fb_WriteScore(score)
 	Player.remove();
 	unclimableblock.removeAll();
 	diamond.removeAll();
