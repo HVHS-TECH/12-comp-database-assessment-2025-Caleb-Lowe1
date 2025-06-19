@@ -127,7 +127,8 @@ function fb_authenticate() {
     .catch((error) => {
 
       //❌ Code for an authentication error goes here
-      console.log("authentication error")
+      console.log("authentication error: " + error)
+
     });
  
 };
@@ -185,9 +186,9 @@ function fb_WriteScore(userScore) {
 
 
     const dbReference= ref(DB, 'Test/UID/' + userId);
-    set(dbReference, {
-        Name: name,
-        userScore: userScore,
+    update(dbReference, {
+       
+      userScore: userScore,
     }).then(() => {
         console.log("Write successful!")
     }).catch((error) => {
@@ -201,20 +202,25 @@ function fb_WriteScore(userScore) {
 
 //function fb_WriteRec incomplete
 function fb_WriteRec() {
-  if (!currentUser) {alert("You must be logged in.")
-  location.href='index.html'
+  var name = document.getElementById("name").value;
+  if (!currentUser || name == "" || name == null) {alert("You must be logged in.")
+  return;
   }
-  else {location.href='gameMenu.html'}
+  
+ 
+  
   console.log('%c fb_WriteRec(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
   
   const dbReference = ref(DB, "Test/UID/" + userId);
-  var name = document.getElementById("name").value;
-  set(dbReference, { Name: name }).then(() => {
+  
+  update(dbReference, { Name: name }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
+    location.href='gameMenu.html'
+    
   }).catch((error) => {
 
     //❌ Code for a write error goes here

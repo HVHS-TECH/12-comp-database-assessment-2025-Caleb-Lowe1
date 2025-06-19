@@ -24,10 +24,13 @@ let caveBg;
 var restartButton;
 var backButton;
 var finish;
+var userScore;
 //enviroment
 let sheetImg;
 let rock, cobblestone, unclimableblock, lava, diamond, emerald, hotrock;
 function preload() {
+	fb_initialise();
+	fb_authenticate();
 	sheetImg = loadImage("Textures-16.png");
 	buttonImg = loadImage("Restart.png");
 	diamondImg = loadImage("spr_coin_azu.png")
@@ -43,7 +46,7 @@ function preload() {
 // setup()
 /*******************************************************/
 function setup() {
-	fb_initialise();
+
 	gameState = "play";
 	console.log("setup: ");
 	cnv = new Canvas(canvasSize.x, canvasSize.y, "pixelated x4")
@@ -192,6 +195,7 @@ function runGame() {
 
 
 	clear();
+	userScore = score;
 	//different background layers
 	background(caveBg1);
 	background(caveBg2);
@@ -253,8 +257,10 @@ function lose() {
 	
 };
 function lostgame() {
+	fb_WriteScore(userScore);
 	gameState = "lose";
-	fb_WriteScore(score)
+	
+
 	Player.remove();
 	unclimableblock.removeAll();
 	diamond.removeAll();
