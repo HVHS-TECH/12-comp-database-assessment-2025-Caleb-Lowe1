@@ -31,6 +31,7 @@ let rock, cobblestone, unclimableblock, lava, diamond, emerald, hotrock;
 function preload() {
 	fb_initialise();
 	fb_authenticate();
+	
 	sheetImg = loadImage("Textures-16.png");
 	buttonImg = loadImage("Restart.png");
 	diamondImg = loadImage("spr_coin_azu.png")
@@ -257,7 +258,9 @@ function lose() {
 	
 };
 function lostgame() {
+	
 	fb_WriteScore(userScore);
+	fb_sortedread();
 	gameState = "lose";
 	
 

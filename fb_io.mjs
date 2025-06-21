@@ -64,7 +64,8 @@ export {
   fb_ReadRec,
   fb_UpdateRec,
   fb_sortedread,
-  fb_WriteScore
+  fb_WriteScore,
+  fb_WriteScore1
 };
 /******************************************************/
 // fb_login()
@@ -178,25 +179,36 @@ function fb_logout() {
   
 };
 
-
-function fb_WriteScore(userScore) {
-  console.log("Successfully Writing Score");
-  console.log(userScore);
+function fb_WriteScore1(userScoregamethatworks) {
   const DB = getDatabase();
+  const highScoreRefgamethatworks = ref(DB, "Test/UID/" + userId + "/userHighScoregamethatworks");
+  const userRefgamethatworks = ref(DB, "Test/UID/" + userId);
 
+  get(highScoreRefgamethatworks).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
+    const prevHighgamethatworks = snap.exists() ? snap.val() : 0;
+    const highScoregamethatworks = userScoregamethatworks > prevHighgamethatworks ? userScoregamethatworks : prevHighgamethatworks;
 
-    const dbReference= ref(DB, 'Test/UID/' + userId);
-    update(dbReference, {
-       
-      userScore: userScore,
-    }).then(() => {
-        console.log("Write successful!")
-    }).catch((error) => {
-        console.log("fail Writing")
+    update(userRefgamethatworks, {
+      userScoregamethatworks: userScoregamethatworks,
+      userHighScoregamethatworks: highScoregamethatworks
     });
-    
+  });
 }
+function fb_WriteScore(userScore) {
+  const DB = getDatabase();
+  const highScoreRef = ref(DB, "Test/UID/" + userId + "/userHighScoreCaverun");
+  const userRef = ref(DB, "Test/UID/" + userId);
 
+  get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
+    const prevHigh = snap.exists() ? snap.val() : 0;
+    const highScore = userScore > prevHigh ? userScore : prevHigh;
+
+    update(userRef, {
+      userScoreCaverun: userScore,
+      userHighScoreCaverun: highScore
+    });
+  });
+}
 
 
 

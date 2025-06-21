@@ -1,6 +1,5 @@
-//imports
-import { fb_initialise, fb_authenticate, fb_detectloginchange, fb_logout, fb_WriteRec, fb_ReadRec, fb_UpdateRec, fb_sortedread }
-    from '../fb_io.mjs';
+//changes to code: game would continue while the user was authenticating which meant the user had no chance to authenticate before
+//the timer ran out and they lost. I had to get some help from ChatGPT to fix that.
 
 
 //variables
@@ -13,15 +12,22 @@ var specialCoin; // Track the special coin
 var specialCoinTime = 10000; // Time to spawn special coin (10 seconds after game starts)
 var gameState = "play";
 var score = 0;
+var userScore1 = 0;
 const COINSIZE = 10;
 const COIN_TIMEOUT = 3000;
+let cointimer = false;
 const PLAYERSIZE = 20;
 const SPECIALCOINSIZE = 15; // Special coin size
 const SPECIALCOINTIME = 1000; // Special coin lifetime in milliseconds
 /*******************************************************/
 // setup()
 /*******************************************************/
+
+
+
 function setup() {
+    fb_initialise();
+    fb_authenticate();
     score = 0;
     console.log("setup: ");
     cnv = new Canvas(canvasWidth, canvasHeight, "Pixelated x4");
@@ -41,9 +47,20 @@ function playerHitCoin(coin, Player) {
     // Delete the regular coin which was hit
     coin.remove();
     score++;
+
+    if (!cointimer) {
+        cointimer = true;
+
+        for (let i = 0; i < coinGroup.length; i++) {
+            coinGroup[i].spawntime = millis();
+        }
+    }
+
+    if (!cointimer) {cointimer = true;}
    
     Player.rotationSpeed = 0;
     Player.rotation = 0;
+    
 }
 
 function playerHitSpecialCoin(specialCoin, Player) {
@@ -75,16 +92,20 @@ function runGame() {
     }
     
     movePlayer();
+    coinGroup.collides(Player, playerHitCoin);
+
     for (var i = 0; i < coinGroup.length; i++) {
         let coin = coinGroup[i];
 
         if (checkCoinTime(coin)) {
             coinGroup.remove(coin);
             gameState = "lose";
+            userScore1 = score;
+            fb_WriteScore1(userScore1)
         }
     }
     
-    coinGroup.collides(Player, playerHitCoin);
+    
 
     // If there's a special coin, check collision and timing
     if (specialCoin) {
@@ -111,6 +132,7 @@ function loseGame() {
     textSize(70);
     text("Score: " + score, 10, 200);
     console.log("Help");
+
 }
 
 function createCoin() {
@@ -134,6 +156,7 @@ function displayScore() {
 }
 
 function checkCoinTime(_coin) {
+    if (!cointimer) return false;
     // Check if the coin has been around too long
     if (_coin.spawntime + COIN_TIMEOUT < millis()) {
         _coin.remove();  // Remove the coin that has been around for too long

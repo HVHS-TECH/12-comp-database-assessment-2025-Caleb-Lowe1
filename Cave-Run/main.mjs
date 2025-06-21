@@ -4,3 +4,4 @@ window.fb_WriteRec = fb_WriteRec;
 window.fb_initialise = fb_initialise;
 window.fb_WriteScore = fb_WriteScore;
 window.fb_authenticate = fb_authenticate;
+window.fb_sortedread = fb_sortedread;
