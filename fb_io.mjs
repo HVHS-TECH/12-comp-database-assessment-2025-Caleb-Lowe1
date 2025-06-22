@@ -135,29 +135,21 @@ function fb_authenticate() {
 };
 
 function fb_detectloginchange() {
-  console.log('%c fb_loginchangedetected(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const AUTH = getAuth();
-  onAuthStateChanged(AUTH, (user) => {
+   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const AUTH = getAuth();
 
-    if (user) {
-
-      //✅ Code for user logged in goes here
-      console.log("user login successful")
-      
-    } else {
-
-      //✅ Code for user logged out goes here
-      console.log("user log out successful")
-    }
-
-  }, (error) => {
-
-    //❌ Code for an onAuthStateChanged error goes here
-    console.log("onAuthStateChanged error")
-  });
-
- 
+    onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email);
+        } else {
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
+        }
+    }, (error) => {
+        console.error("❌ Auth detection error:", error);
+    });
 };
 
 function fb_logout() {
@@ -215,7 +207,8 @@ function fb_WriteScore(userScore) {
 //function fb_WriteRec incomplete
 function fb_WriteRec() {
   var name = document.getElementById("name").value;
-  if (!currentUser || name == "" || name == null) {alert("You must be logged in.")
+  var age = document.getElementById("age").value;
+  if (!currentUser || name == "" || name == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
   return;
   }
   
@@ -227,7 +220,7 @@ function fb_WriteRec() {
   
   const dbReference = ref(DB, "Test/UID/" + userId);
   
-  update(dbReference, { Name: name }).then(() => {
+  update(dbReference, { Name: name, Age: age }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")

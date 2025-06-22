@@ -1,7 +1,3 @@
-//changes to code: game would continue while the user was authenticating which meant the user had no chance to authenticate before
-//the timer ran out and they lost. I had to get some help from ChatGPT to fix that.
-
-
 //variables
 const canvasWidth = 500;
 const canvasHeight = 500;
@@ -15,7 +11,6 @@ var score = 0;
 var userScore1 = 0;
 const COINSIZE = 10;
 const COIN_TIMEOUT = 3000;
-let cointimer = false;
 const PLAYERSIZE = 20;
 const SPECIALCOINSIZE = 15; // Special coin size
 const SPECIALCOINTIME = 1000; // Special coin lifetime in milliseconds
@@ -27,7 +22,7 @@ const SPECIALCOINTIME = 1000; // Special coin lifetime in milliseconds
 
 function setup() {
     fb_initialise();
-    fb_authenticate();
+    fb_detectloginchange();
     score = 0;
     console.log("setup: ");
     cnv = new Canvas(canvasWidth, canvasHeight, "Pixelated x4");
@@ -48,15 +43,9 @@ function playerHitCoin(coin, Player) {
     coin.remove();
     score++;
 
-    if (!cointimer) {
-        cointimer = true;
+    
 
-        for (let i = 0; i < coinGroup.length; i++) {
-            coinGroup[i].spawntime = millis();
-        }
-    }
-
-    if (!cointimer) {cointimer = true;}
+    
    
     Player.rotationSpeed = 0;
     Player.rotation = 0;
@@ -156,7 +145,7 @@ function displayScore() {
 }
 
 function checkCoinTime(_coin) {
-    if (!cointimer) return false;
+    
     // Check if the coin has been around too long
     if (_coin.spawntime + COIN_TIMEOUT < millis()) {
         _coin.remove();  // Remove the coin that has been around for too long

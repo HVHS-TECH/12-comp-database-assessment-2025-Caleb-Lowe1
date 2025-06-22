@@ -3,3 +3,4 @@ import { fb_initialise, fb_authenticate, fb_detectloginchange, fb_logout, fb_Wri
 window.fb_authenticate = fb_authenticate;
 window.fb_WriteScore1 = fb_WriteScore1;
 window.fb_initialise = fb_initialise;
+window.fb_detectloginchange = fb_detectloginchange;

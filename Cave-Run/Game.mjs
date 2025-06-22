@@ -30,7 +30,7 @@ let sheetImg;
 let rock, cobblestone, unclimableblock, lava, diamond, emerald, hotrock;
 function preload() {
 	fb_initialise();
-	fb_authenticate();
+	fb_detectloginchange();
 	
 	sheetImg = loadImage("Textures-16.png");
 	buttonImg = loadImage("Restart.png");
@@ -47,7 +47,7 @@ function preload() {
 // setup()
 /*******************************************************/
 function setup() {
-
+	
 	gameState = "play";
 	console.log("setup: ");
 	cnv = new Canvas(canvasSize.x, canvasSize.y, "pixelated x4")

@@ -5,3 +5,4 @@ window.fb_initialise = fb_initialise;
 window.fb_WriteScore = fb_WriteScore;
 window.fb_authenticate = fb_authenticate;
 window.fb_sortedread = fb_sortedread;
+window.fb_detectloginchange = fb_detectloginchange;
