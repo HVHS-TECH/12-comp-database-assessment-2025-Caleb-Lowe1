@@ -200,6 +200,7 @@ function fb_WriteScore(userScore) {
       userHighScoreCaverun: highScore
     });
   });
+  if (userScore > highScore){highScore = userScore}
 }
 
 
