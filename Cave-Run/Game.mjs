@@ -257,10 +257,10 @@ function lose() {
 	mouseInteractBackButton();
 	
 };
+
 function lostgame() {
 	
 	fb_WriteScore(userScore);
-	fb_sortedread();
 	gameState = "lose";
 	
 
@@ -302,6 +302,8 @@ function completedlevel() {
 	}
 	else if (health == 2) { score = score + 100; }
 	else if (health == 1) { score = score + 50; }
+	userScore = score;
+	fb_WriteScore(userScore);
 	Player.remove();
 	unclimableblock.removeAll();
 	diamond.removeAll();

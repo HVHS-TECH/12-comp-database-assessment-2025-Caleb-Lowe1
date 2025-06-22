@@ -190,7 +190,7 @@ function fb_WriteScore(userScore) {
   const DB = getDatabase();
   const highScoreRef = ref(DB, "Test/UID/" + userId + "/userHighScoreCaverun");
   const userRef = ref(DB, "Test/UID/" + userId);
-
+console.log("Score written")
   get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
     const prevHigh = snap.exists() ? snap.val() : 0;
     const highScore = userScore > prevHigh ? userScore : prevHigh;
