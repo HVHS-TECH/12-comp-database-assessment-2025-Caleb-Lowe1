@@ -142,7 +142,7 @@ function fb_detectloginchange() {
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email);
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
             location.href = "index.html"; 
@@ -207,11 +207,13 @@ console.log("Score written")
 
 //function fb_WriteRec incomplete
 function fb_WriteRec() {
+  const AUTH = getAuth();
   var name = document.getElementById("name").value;
   var age = document.getElementById("age").value;
   if (!currentUser || name == "" || name == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
   return;
   }
+  
   
  
   
@@ -225,13 +227,41 @@ function fb_WriteRec() {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
-    location.href='gameMenu.html'
+    
     
   }).catch((error) => {
 
     //❌ Code for a write error goes here
     console.log("Writing error")
   });
+
+
+
+
+  onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
+            update(dbReference, { Email: user.email, profilepicture: user.photoURL, Emaildisplayname : user.displayName}).then(() => {
+              location.href='gameMenu.html'
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+    
+    
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  });
+        } else {
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
+        }
+    },
+    (error) => {
+        console.error("❌ Auth detection error:", error);
+    });
 }
 
 function fb_ReadRec() {
