@@ -20,6 +20,10 @@ import { fb_authenticate }
     from './fb_io.mjs';
 window.fb_authenticate = fb_authenticate;
 
+import { fb_WriteRecPrivate }
+    from './fb_io.mjs';
+window.fb_WriteRecPrivate = fb_WriteRecPrivate;
+
 import { fb_detectloginchange }
     from './fb_io.mjs';
 window.fb_detectloginchange = fb_detectloginchange;

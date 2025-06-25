@@ -65,7 +65,8 @@ export {
   fb_UpdateRec,
   fb_sortedread,
   fb_WriteScore,
-  fb_WriteScore1
+  fb_WriteScore1,
+  fb_WriteRecPrivate
 };
 /******************************************************/
 // fb_login()
@@ -142,7 +143,7 @@ function fb_detectloginchange() {
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
             location.href = "index.html"; 
@@ -205,7 +206,7 @@ console.log("Score written")
 
 
 
-//function fb_WriteRec incomplete
+
 function fb_WriteRec() {
   const AUTH = getAuth();
   var name = document.getElementById("name").value;
@@ -223,7 +224,7 @@ function fb_WriteRec() {
   
   const dbReference = ref(DB, "Test/UID/" + userId);
   
-  update(dbReference, { Name: name, Age: age }).then(() => {
+  update(dbReference, {Name: name}).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -234,16 +235,11 @@ function fb_WriteRec() {
     //❌ Code for a write error goes here
     console.log("Writing error")
   });
-
-
-
-
   onAuthStateChanged(AUTH, (user) => {
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
-            update(dbReference, { Email: user.email, profilepicture: user.photoURL, Emaildisplayname : user.displayName}).then(() => {
+            update(dbReference, {Photo : user.photoURL}).then(() => {
               location.href='gameMenu.html'
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -262,7 +258,38 @@ function fb_WriteRec() {
     (error) => {
         console.error("❌ Auth detection error:", error);
     });
+
+
 }
+
+function fb_WriteRecPrivate() {
+  const AUTH = getAuth();
+   const dbReference = ref(DB, "Test/Private/" + userId);
+  onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName);
+            update(dbReference, { Email: user.email, Emaildisplayname : user.displayName, Age: age}).then(() => {
+              location.href='gameMenu.html'
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+    
+    
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  });
+        } else {
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
+        }
+    },
+    (error) => {
+        console.error("❌ Auth detection error:", error);
+    });
+  };
 
 function fb_ReadRec() {
   console.log('%c fb_ReadRec(): ',
