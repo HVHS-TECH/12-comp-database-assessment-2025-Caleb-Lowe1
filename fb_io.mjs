@@ -174,31 +174,32 @@ function fb_logout() {
 
 function fb_WriteScore1(userScoregamethatworks) {
   const DB = getDatabase();
-  const highScoreRefgamethatworks = ref(DB, "Test/UID/" + userId + "/userHighScoregamethatworks");
-  const userRefgamethatworks = ref(DB, "Test/UID/" + userId);
+  const highScoreRefgamethatworks = ref(DB, "Public/" + userId + "/userHighScoregamethatworks");
+  const userRefgamethatworks = ref(DB, "Public/" + userId);
 
   get(highScoreRefgamethatworks).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
     const prevHighgamethatworks = snap.exists() ? snap.val() : 0;
     const highScoregamethatworks = userScoregamethatworks > prevHighgamethatworks ? userScoregamethatworks : prevHighgamethatworks;
 
-    update(userRefgamethatworks, {
-      userScoregamethatworks: userScoregamethatworks,
-      userHighScoregamethatworks: highScoregamethatworks
+    update(userRefgamethatworks, {userScoregamethatworks: userScoregamethatworks,
+      userHighScoregamethatworks: highScoregamethatworks}).then(() => {
+      console.log("written")
     });
   });
 }
 function fb_WriteScore(userScore) {
   const DB = getDatabase();
-  const highScoreRef = ref(DB, "Test/UID/" + userId + "/userHighScoreCaverun");
-  const userRef = ref(DB, "Test/UID/" + userId);
+  const highScoreRef = ref(DB, "Public/" + userId + "/userHighScoreCaverun");
+  const userRef = ref(DB, "Public/" + userId);
 console.log("Score written")
   get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
     const prevHigh = snap.exists() ? snap.val() : 0;
     const highScore = userScore > prevHigh ? userScore : prevHigh;
 
-    update(userRef, {
-      userScoreCaverun: userScore,
-      userHighScoreCaverun: highScore
+
+    update(userRef, {userScoreCaverun: userScore,
+      userHighScoreCaverun: highScore}).then(() => {
+      console.log("written")
     });
   });
 
