@@ -211,9 +211,9 @@ console.log("Score written")
 function fb_WriteRec() {
   const AUTH = getAuth();
    var name = document.getElementById("name").value;
-
-  if (!currentUser || name == "" || name == null) {alert("You must be logged in and enter a valid name and age.")
-  return;
+    var age = document.getElementById("age").value;
+  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+location.href = "index.html";
   }
   
  
@@ -265,10 +265,12 @@ function fb_WriteRec() {
 
 function fb_WriteRecPrivate() {
   const AUTH = getAuth();
-  var age = document.getElementById("age").value;
-  if ( age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
-  return;
+  var name = document.getElementById("name").value;
+    var age = document.getElementById("age").value;
+  if (!currentUser || name == "" || name == null || !isNaN(name) || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+location.href = "index.html";
   }
+
   const DB = getDatabase();
    const dbReference = ref(DB, "Private/" + userId);
 
