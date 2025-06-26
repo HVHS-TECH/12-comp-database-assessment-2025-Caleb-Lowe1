@@ -209,20 +209,20 @@ console.log("Score written")
 
 function fb_WriteRec() {
   const AUTH = getAuth();
-  var name = document.getElementById("name").value;
-  var age = document.getElementById("age").value;
-  if (!currentUser || name == "" || name == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+   var name = document.getElementById("name").value;
+
+  if (!currentUser || name == "" || name == null) {alert("You must be logged in and enter a valid name and age.")
   return;
   }
   
-  
+ 
  
   
   console.log('%c fb_WriteRec(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
   
-  const dbReference = ref(DB, "Test/UID/" + userId);
+  const dbReference = ref(DB, "Public/" + userId);
   
   update(dbReference, {Name: name}).then(() => {
 
@@ -240,7 +240,7 @@ function fb_WriteRec() {
             currentUser = user;
             userId = user.uid;
             update(dbReference, {Photo : user.photoURL}).then(() => {
-              location.href='gameMenu.html'
+              
     //✅ Code for a successful write goes here
     console.log("successful write")
     
@@ -264,7 +264,13 @@ function fb_WriteRec() {
 
 function fb_WriteRecPrivate() {
   const AUTH = getAuth();
-   const dbReference = ref(DB, "Test/Private/" + userId);
+  var age = document.getElementById("age").value;
+  if ( age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+  return;
+  }
+  const DB = getDatabase();
+   const dbReference = ref(DB, "Private/" + userId);
+
   onAuthStateChanged(AUTH, (user) => {
         if (user) {
             currentUser = user;
