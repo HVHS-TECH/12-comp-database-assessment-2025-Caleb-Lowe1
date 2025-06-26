@@ -212,7 +212,8 @@ function fb_WriteRec() {
   const AUTH = getAuth();
    var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
-  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+    var colour = document.getElementById("colour").value;
+  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || colour == "" || colour == null || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
 location.href = "index.html";
   }
   
@@ -267,7 +268,8 @@ function fb_WriteRecPrivate() {
   const AUTH = getAuth();
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
-  if (!currentUser || name == "" || name == null || !isNaN(name) || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+   var colour = document.getElementById("colour").value; 
+  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || colour == "" || colour == null || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
 location.href = "index.html";
   }
 
@@ -278,8 +280,8 @@ location.href = "index.html";
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email, "Name:", user.displayName);
-            update(dbReference, { Email: user.email, Emaildisplayname : user.displayName, Age: age}).then(() => {
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, colour);
+            update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, Favouritecolour: colour}).then(() => {
               location.href='gameMenu.html'
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -351,35 +353,50 @@ function fb_UpdateRec() {
 
 
 
-
 function fb_sortedread() {
+    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    var sortKey = "userHighScoreCaverun";
+    //leaderboardSign.innerHTML = "You pressed the button!";
 
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(4));
 
-  const DB = getDatabase()
-  var sortkey = "Score";
-  const dbReference = query(ref(DB, "Test/UID/" + userId), orderByChild(sortkey), limitToFirst(3));
+     //get(dbReference).then((snapshot) => 
+    //{
+        // Do Stuff
+    //});
 
-  get(dbReference).then((snapshot) => {
+    get(dbReference).then((allScoreDataSnapshot) => {
+        allScoreDataSnapshot.forEach(function (userScoreSnapshot) {
+            var obj = userScoreSnapshot.val();
+            console.log(obj);
+            //Test.innerHTML = obj;
+        });
+    });
 
-    var fb_data = snapshot.val();
+    get(dbReference).then((snapshot) => {
 
-    if (fb_data != null) {
+        var fb_data = snapshot.val();
 
-      //✅ Code for a successful sorted read goes here
-      console.log("succesfully sorted read")
-      console.log(fb_data)
-    } else {
+      if (fb_data != null) {
 
-      //✅ Code for no record found goes here
-      console.log("no record found")
-    }
+           //✅ Code for a successful sorted read goes here
+           console.log("Sorted Successfully");
 
-  }).catch((error) => {
+        } else {
 
-    //❌ Code for a sorted read error goes here
-    console.log("sorted read error")
-    console.log(error)
-  });
+           //✅ Code for no record found goes here
+            console.log("Sorted Successfully, but no record");
+            
+
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a sorted read error goes here
+        console.log("Sorting failed");
+    });
+
 }
 
 /**************************************************************/
