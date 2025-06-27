@@ -353,6 +353,8 @@ function fb_UpdateRec() {
 }
 
 
+
+
 //some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
 function fb_sortedread() {
   console.log('%c fb_sortedread(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -360,35 +362,42 @@ function fb_sortedread() {
   const sortKey = "userHighScoreCaverun";
   const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey)); 
   const table = document.getElementById("highScoreTableLibrary");
-  table.innerHTML = ""; //added by chatgpt
+  table.innerHTML = "";
 
   get(dbReference).then((snapshot) => {
-    var rank = 1;//added by chatgpt
-    snapshot.forEach((userSnap) => {//added by chatgpt
-      var obj = userSnap.val();//chatgpt changed this a bit
-      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.userHighScoreCaverun + "</td></tr>";//updated by chatgpt
-      rank++;//added by chatgpt
+    var rank = 1;
+    const users = []; 
+    snapshot.forEach((userSnap) => { 
+      users.push(userSnap.val());
+    });
+    users.reverse(); 
+    users.forEach((obj) => {
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.userHighScoreCaverun + "</td></tr>";
+      rank++;
     });
   }).catch((error) => {
     console.log("Sorting failed", error);
   });
 }
 
-//some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
 function fb_sortedreadcoin() {
   console.log('%c fb_sortedreadcoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase();
   const sortKey = "userHighScoregamethatworks";
-  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey));//chatgpt removed limit to first
+  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey));
   const table = document.getElementById("highScoreTableCoin");
-  table.innerHTML = "";//added by chatgpt
+  table.innerHTML = "";
 
   get(dbReference).then((snapshot) => {
-    var rank = 1;//chatgpt added this
-    snapshot.forEach((userSnap) => {//chatgpt added this
-      var obj = userSnap.val();//chatgpt changed this a bit
-      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.userHighScoregamethatworks + "</td></tr>";//chatgpt updated this
-      rank++;//chatgpt added this
+    var rank = 1;
+    const users = []; 
+    snapshot.forEach((userSnap) => { 
+      users.push(userSnap.val()); 
+    });
+    users.reverse();
+    users.forEach((obj) => {
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.userHighScoregamethatworks + "</td></tr>";
+      rank++;
     });
   }).catch((error) => {
     console.log("Sorting failed", error);
