@@ -45,34 +45,35 @@
 <button onclick="fb_WriteRec(); fb_WriteRecPrivate();">Submit</button>
 
 
-<h3 id="leaderboardSign" >Leaderboards:</h3>
-            <button onclick="">Sort Library Labryinth Leaderboard</button>
-            <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Highscore</th> 
-                </tr>
-                <tr id = "highScoreTableLibrary">
-                    <td>1</td>
-                    <td id = "namecave">name</td>
-                    <td id = "Highscorecave">highscore</td>
-                </tr>
-            </table>
-            <button onclick="">Sort Coin Collector Leaderboard</button>
-            <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Highscore</th> 
-                </tr>
-                <tr id = "highScoreTableCoin">
-                    <td>1</td>
-                    <td id = namecoin>name</td>
-                    <td id = Highscorecoin>score</td>
-                </tr>
-            </table>
-            </div>
+<h3 id="leaderboardSign">Cave Run Leaderboard:</h3>
+<!--this part was adjusted by chatgpt-->
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Name</th>
+      <th>Highscore</th>
+    </tr>
+  </thead>
+  <tbody id="highScoreTableLibrary">
+    
+  </tbody>
+</table>
+
+
+<h3>Coin Collector Leaderboard:</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Name</th>
+      <th>Highscore</th>
+    </tr>
+  </thead>
+  <tbody id="highScoreTableCoin">
+    <!-- JS will insert <tr> rows here -->
+  </tbody>
+</table>
             
 
          
