@@ -371,7 +371,8 @@ function fb_sortedread() {
             var obj = userScoreSnapshot.val();
             console.log(obj);
             Test.innerHTML = obj.Name;
-            Highscore.innerHTML = obj.userHighScoreCaverun
+            Highscorecave.innerHTML = obj.userHighScoreCaverun;
+            Highscorecoin.innerHTML = obj.userHighScoregamethatworks
         });
     });
 
