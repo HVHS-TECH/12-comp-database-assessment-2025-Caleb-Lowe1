@@ -357,20 +357,21 @@ function fb_sortedread() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var sortKey = "userHighScoreCaverun";
-    //leaderboardSign.innerHTML = "You pressed the button!";
+    leaderboardSign.innerHTML = "You pressed the button!";
 
     const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(4));
 
-     //get(dbReference).then((snapshot) => 
-    //{
+     get(dbReference).then((snapshot) => 
+    {
         // Do Stuff
-    //});
+    });
 
     get(dbReference).then((allScoreDataSnapshot) => {
         allScoreDataSnapshot.forEach(function (userScoreSnapshot) {
             var obj = userScoreSnapshot.val();
             console.log(obj);
-            //Test.innerHTML = obj;
+            Test.innerHTML = obj.Name;
+            Highscore.innerHTML = obj.userHighScoreCaverun
         });
     });
 
