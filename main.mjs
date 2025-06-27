@@ -28,9 +28,6 @@ import { fb_detectloginchange }
     from './fb_io.mjs';
 window.fb_detectloginchange = fb_detectloginchange;
 
-import { fb_logout }
-    from './fb_io.mjs';
-window.fb_logout = fb_logout;
 
 import { fb_WriteRec }
     from './fb_io.mjs';
@@ -40,13 +37,7 @@ import { fb_WriteScore }
     from './fb_io.mjs';
 window.fb_WriteScore = fb_WriteScore;
 
-import { fb_ReadRec }
-    from './fb_io.mjs';
-window.fb_ReadRec = fb_ReadRec;
 
-import { fb_UpdateRec }
-    from './fb_io.mjs';
-window.fb_UpdateRec = fb_UpdateRec;
 
 import { fb_sortedread }
     from './fb_io.mjs';

@@ -59,10 +59,10 @@ export {
   fb_initialise,
   fb_authenticate,
   fb_detectloginchange,
-  fb_logout,
+
   fb_WriteRec,
-  fb_ReadRec,
-  fb_UpdateRec,
+  
+ 
   fb_sortedread,
   fb_WriteScore,
   fb_WriteScore1,
@@ -154,24 +154,7 @@ function fb_detectloginchange() {
     });
 };
 
-function fb_logout() {
-  console.log('%c fb_logout(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const AUTH = getAuth();
 
-  signOut(AUTH).then(() => {
-
-    //✅ Code for a successful logout goes here
-    console.log("successful logout")
-  })
-
-    .catch((error) => {
-
-      //❌ Code for a logout error goes here
-      console.log("logout error")
-    });
-  
-};
 
 function fb_WriteScore1(userScoregamethatworks) {
   const DB = getDatabase();
@@ -303,54 +286,9 @@ location.href = "index.html";
     });
   };
 
-function fb_ReadRec() {
-  console.log('%c fb_ReadRec(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const DB = getDatabase()
-  const dbReference = ref(DB, "Test/UID/Score");
-
-  get(dbReference).then((snapshot) => {
-
-    var fb_data = snapshot.val();
-
-    if (fb_data != null) {
-
-      //✅ Code for a successful read goes here
-      console.log("successful read")
-      console.log(fb_data)
-    } else {
-
-      //✅ Code for no record found goes here
-      console.log("no record found")
-    }
-
-  }).catch((error) => {
-
-    //❌ Code for a read error goes here
-    console.log("read error")
-    console.log(error)
-  });
-  document.getElementById("p_fbReadRec").innerHTML = "Record Read"
-}
 
 
-function fb_UpdateRec() {
-  console.log('%c fb_UpdateRec(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const DB = getDatabase()
-  const dbReference = ref(DB, "Test/UID");
 
-  update(dbReference, { Score: "2", Highscore: "5" }).then(() => {
-
-    //✅ Code for a successful update goes here
-    console.log("successful update")
-  }).catch((error) => {
-
-    //❌ Code for a update error goes here
-    console.log("failed update")
-  });
-  document.getElementById("p_fbUpdateRec").innerHTML = "Updated record"
-}
 
 
 
