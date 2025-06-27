@@ -66,7 +66,8 @@ export {
   fb_sortedread,
   fb_WriteScore,
   fb_WriteScore1,
-  fb_WriteRecPrivate
+  fb_WriteRecPrivate,
+  fb_sortedreadcoin
 };
 /******************************************************/
 // fb_login()
@@ -370,11 +371,64 @@ function fb_sortedread() {
         allScoreDataSnapshot.forEach(function (userScoreSnapshot) {
             var obj = userScoreSnapshot.val();
             console.log(obj);
-            Test.innerHTML = obj.Name;
+            namecave.innerHTML = obj.Name;
             Highscorecave.innerHTML = obj.userHighScoreCaverun;
-            Highscorecoin.innerHTML = obj.userHighScoregamethatworks
+            
         });
     });
+
+
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+      if (fb_data != null) {
+
+           //✅ Code for a successful sorted read goes here
+           console.log("Sorted Successfully");
+
+        } else {
+
+           //✅ Code for no record found goes here
+            console.log("Sorted Successfully, but no record");
+            
+
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a sorted read error goes here
+        console.log("Sorting failed");
+    });
+
+}
+
+
+function fb_sortedreadcoin() {
+    console.log('%c fb_ReadSortedcoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    var sortKey = "userHighScoregamethatworks";
+    leaderboardSign.innerHTML = "You pressed the button!";
+
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(4));
+
+     get(dbReference).then((snapshot) => 
+    {
+        // Do Stuff
+    });
+
+    get(dbReference).then((allScoreDataSnapshot1) => {
+        allScoreDataSnapshot1.forEach(function (userScoreSnapshot1) {
+            var obj = userScoreSnapshot1.val();
+            console.log(obj);
+            namecoin.innerHTML = obj.Name;
+            Highscorecoin.innerHTML = obj.userHighScoregamethatworks;
+            
+        });
+    });
+
+
 
     get(dbReference).then((snapshot) => {
 

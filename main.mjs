@@ -51,6 +51,10 @@ window.fb_UpdateRec = fb_UpdateRec;
 import { fb_sortedread }
     from './fb_io.mjs';
 window.fb_sortedread = fb_sortedread;
+
+import { fb_sortedreadcoin }
+    from './fb_io.mjs';
+window.fb_sortedreadcoin = fb_sortedreadcoin;
 /**************************************************************/
 // index.html main code
 /**************************************************************/
